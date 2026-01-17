@@ -1,9 +1,17 @@
-import { Plus, Search, Loader2, Flower2, Instagram, Mail, MessageCircle } from 'lucide-react';
-import { useState } from 'react';
-import FallingBackground from '../shared/FallingBackground';
+import {
+  Plus,
+  Search,
+  Loader2,
+  Flower2,
+  Instagram,
+  Mail,
+  MessageCircle,
+} from "lucide-react";
+import { useState } from "react";
+import FallingBackground from "../shared/FallingBackground";
 
 const HomeView = ({ onStartCustom, onGoCatalog }) => {
-  const [orderId, setOrderId] = useState('');
+  const [orderId, setOrderId] = useState("");
   const [orderData, setOrderData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -23,9 +31,7 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
     setLoading(true);
     setOrderData(null);
     try {
-      const response = await fetch(
-        `http://72.62.243.238:5000/api/orders/track/${orderId}`
-      );
+      const response = await fetch(`/api/orders/track/${orderId}`);
 
       if (response.ok) {
         const data = await response.json();
@@ -50,7 +56,7 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
           className="fixed inset-0 z-20"
           onClick={() => {
             setShowSearch(false);
-            setOrderId('');
+            setOrderId("");
           }}
         />
       )}
@@ -76,7 +82,7 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
         flex-1 px-6 py-4 outline-none text-[#5D6D4E] bg-transparent text-base"
               value={orderId}
               onChange={(e) => setOrderId(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               autoFocus
             />
             <button
@@ -92,7 +98,6 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
               )}
             </button>
           </div>
-
         )}
         {orderData && (
           <div className="mt-4 p-5 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[2.5rem] border-2 border-[#F1F5E9] text-left animate-in fade-in zoom-in-95 duration-500 relative overflow-hidden group">
@@ -107,15 +112,26 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
                   #{orderData.orderId}
                 </div>
                 <div className=" text-gray-400 text-[11px]">
-                  {new Date(orderData.orderTime).toLocaleDateString('th-TH', { year: '2-digit', month: '2-digit', day: '2-digit' })} {new Date(orderData.orderTime).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })}
+                  {new Date(orderData.orderTime).toLocaleDateString("th-TH", {
+                    year: "2-digit",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}{" "}
+                  {new Date(orderData.orderTime).toLocaleTimeString("th-TH", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </div>
               </div>
-              <span className={`text-[11px] font-bold px-3 py-1 rounded-full ${orderData.status === 'rejected'
-                ? 'bg-red-50 text-red-400'
-                : 'bg-[#8A9A7B] text-white'
-                }`}>
-                {orderData.status === 'rejected'
-                  ? 'คำสั่งซื้อไม่สำเร็จ'
+              <span
+                className={`text-[11px] font-bold px-3 py-1 rounded-full ${
+                  orderData.status === "rejected"
+                    ? "bg-red-50 text-red-400"
+                    : "bg-[#8A9A7B] text-white"
+                }`}
+              >
+                {orderData.status === "rejected"
+                  ? "คำสั่งซื้อไม่สำเร็จ"
                   : orderData.status}
               </span>
             </div>
@@ -126,7 +142,10 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
             <div className="bg-[#FAF9F6] p-3 rounded-2xl border border-dashed border-[#8A9A7B]/30">
               <ul className="space-y-1">
                 {orderData.flowers.map((flower, idx) => (
-                  <li key={idx} className="text-xs text-gray-500 flex justify-between">
+                  <li
+                    key={idx}
+                    className="text-xs text-gray-500 flex justify-between"
+                  >
                     <span>🌸 {flower.name}</span>
                     <span className="font-medium text-[#8A9A7B]">
                       {flower.price}.-
@@ -198,27 +217,46 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
       {/* ================= Contact Section (New!) ================= */}
       <div className="mt-16 flex flex-col items-center gap-4 z-10 relative">
         <div className="flex items-center gap-6">
-          <a href="https://www.instagram.com/flowersforyou24?igsh=bjhnems5enhwNTQ=" target="_blank" rel="noreferrer"
-            className="text-[#8A9A7B] hover:text-[#5D6D4E] transition-transform hover:scale-110">
+          <a
+            href="https://www.instagram.com/flowersforyou24?igsh=bjhnems5enhwNTQ="
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#8A9A7B] hover:text-[#5D6D4E] transition-transform hover:scale-110"
+          >
             <Instagram size={24} />
           </a>
-          <a href="https://www.tiktok.com/@flowers_for_you_24?_r=1&_t=ZS-938iZpPXDC3" target="_blank" rel="noreferrer"
-            className="text-[#8A9A7B] hover:text-[#5D6D4E] transition-transform hover:scale-110">
+          <a
+            href="https://www.tiktok.com/@flowers_for_you_24?_r=1&_t=ZS-938iZpPXDC3"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#8A9A7B] hover:text-[#5D6D4E] transition-transform hover:scale-110"
+          >
             {/* TikTok Icon (Using MessageCircle or a custom SVG) */}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+            </svg>
           </a>
 
           <div className="relative flex flex-col items-center">
             {/* ข้อความแจ้งเตือนเมื่อคัดลอกสำเร็จ */}
             {copied && (
-    <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <div className="relative bg-[#8A9A7B] text-white text-[11px] font-medium py-1.5 px-3 rounded-xl shadow-lg whitespace-nowrap">
-        คัดลอกอีเมลแล้ว!
-        {/* หางลูกศรชี้ลง */}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#8A9A7B] rotate-45"></div>
-      </div>
-    </div>
-  )}
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="relative bg-[#8A9A7B] text-white text-[11px] font-medium py-1.5 px-3 rounded-xl shadow-lg whitespace-nowrap">
+                  คัดลอกอีเมลแล้ว!
+                  {/* หางลูกศรชี้ลง */}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#8A9A7B] rotate-45"></div>
+                </div>
+              </div>
+            )}
 
             <button
               onClick={handleCopyEmail}
