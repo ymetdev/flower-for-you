@@ -1,5 +1,5 @@
-import { ImageIcon, CheckCircle2 } from "lucide-react";
-import { QRCodeSVG } from "qrcode.react"; // แก้ไข: นำเข้าแบบ Named Export { QRCodeSVG }
+import { ImageIcon, CheckCircle2, ArrowLeft } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import generatePayload from "promptpay-qr";
 
 const PaymentView = ({
@@ -8,35 +8,52 @@ const PaymentView = ({
   setPaymentSlip,
   onConfirm,
   isLoading,
+  onBack,
 }) => {
-  // 1. กำหนดหมายเลขพร้อมเพย์ (ควรใช้เบอร์ที่ผูกพร้อมเพย์จริง)
+  // หมายเลขพร้อมเพย์
   const MY_PROMPTPAY_ID = "0612271094";
 
-  // 2. สร้าง Payload สำหรับ QR Code
+  // สร้าง Payload QR Code
   const qrPayload = generatePayload(MY_PROMPTPAY_ID, { amount: totalPrice });
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] p-8 flex items-center justify-center">
-      <div className="max-w-md w-full bg-white p-10 rounded-[3rem] shadow-xl text-center border border-[#F0EAD6]">
-        <h2 className="text-3xl font-serif text-[#5D6D4E] mb-2">ชำระเงิน</h2>
+    <div className="min-h-screen bg-[#FDFBF7] p-8 relative flex items-center justify-center">
+      
+      {/* ปุ่มย้อนกลับ */}
+      <button
+        onClick={onBack}
+        className="absolute top-8 left-8 flex items-center gap-2 text-[#5D6D4E] font-bold hover:opacity-70 transition"
+      >
+        <ArrowLeft size={20} />
+        ย้อนกลับ
+      </button>
 
+      {/* การ์ดชำระเงิน */}
+      <div className="max-w-md w-full bg-white p-10 rounded-[3rem] shadow-xl text-center border border-[#F0EAD6]">
+        <h2 className="text-3xl font-serif text-[#5D6D4E] mb-2">
+          ชำระเงิน
+        </h2>
+
+        {/* ยอดชำระ */}
         <div className="mb-6">
           <p className="text-sm text-gray-400 uppercase tracking-widest font-bold">
             ยอดชำระสุทธิ
           </p>
-          <p className="text-4xl text-[#5D6D4E] font-black">฿{totalPrice}</p>
+          <p className="text-4xl text-[#5D6D4E] font-black">
+            ฿{totalPrice}
+          </p>
         </div>
 
-        {/* ส่วนแสดง QR Code */}
+        {/* QR Code */}
         <div className="bg-[#F8F9F4] p-6 rounded-3xl mb-8 flex flex-col items-center border-4 border-[#5D6D4E]/10 shadow-inner">
           <div className="bg-white p-4 rounded-2xl shadow-sm mb-4">
-            {/* แก้ไข: เปลี่ยนจาก <QRCode /> เป็น <QRCodeSVG /> */}
             <QRCodeSVG
               value={qrPayload}
               size={200}
-              marginSize={2} // QRCodeSVG ใช้ marginSize แทน includeMargin ในบางเวอร์ชัน
+              marginSize={2}
             />
           </div>
+
           <div className="text-[#5D6D4E] font-bold text-sm">
             <p>สแกนผ่านแอปธนาคารเพื่อชำระเงิน</p>
             <p className="text-[10px] opacity-60 font-normal mt-1">
@@ -45,10 +62,12 @@ const PaymentView = ({
           </div>
         </div>
 
+        {/* อัปโหลดสลิป */}
         <div className="mb-8 text-left">
           <label className="text-[10px] font-bold text-gray-400 mb-2 block uppercase ml-2">
             แนบหลักฐานการโอน
           </label>
+
           <div
             className={`relative border-2 border-dashed rounded-2xl p-8 cursor-pointer transition-all ${
               paymentSlip
@@ -66,6 +85,7 @@ const PaymentView = ({
                 }
               }}
             />
+
             <div className="flex flex-col items-center">
               {paymentSlip ? (
                 <div className="text-green-600 flex flex-col items-center text-center">
@@ -89,6 +109,7 @@ const PaymentView = ({
           </div>
         </div>
 
+        {/* ปุ่มยืนยัน */}
         <button
           onClick={onConfirm}
           disabled={!paymentSlip || isLoading}
@@ -96,7 +117,7 @@ const PaymentView = ({
         >
           {isLoading ? (
             <div className="flex items-center justify-center gap-2">
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               <span>กำลังส่งข้อมูล...</span>
             </div>
           ) : (
