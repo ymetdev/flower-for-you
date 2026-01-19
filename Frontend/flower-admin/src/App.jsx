@@ -15,7 +15,11 @@ import {
   Download,
   Phone,
   Mail,
+  EyeOff,
 } from "lucide-react";
+
+
+
 
 // --- 1. ฟังก์ชันแปลงชื่อสี (ปรับปรุงให้รองรับสีมากขึ้นและป้องกัน Error) ---
 const getColorName = (hex) => {
@@ -61,16 +65,20 @@ const groupFlowers = (details) => {
 
 const LoginView = ({ onLogin }) => {
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const ADMIN_PASSWORD = "admin123";
+
   return (
     <div className="min-h-screen bg-[#FDFBF7] flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white p-10 rounded-[3rem] shadow-xl text-center border border-[#F0EAD6]">
         <div className="w-20 h-20 bg-[#F8F9F4] rounded-full flex items-center justify-center mx-auto mb-6">
           <Lock className="text-[#8A9A7B]" size={32} />
         </div>
-        <h2 className="text-2xl font-serif text-[#5D6D4E] mb-2 font-bold">
+
+        <h2 className="text-2xl font-serif text-[#5D6D4E] mb-6 font-bold">
           Admin Access
         </h2>
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -78,12 +86,30 @@ const LoginView = ({ onLogin }) => {
             else alert("รหัสผ่านไม่ถูกต้อง");
           }}
         >
-          <input
-            type="password"
-            placeholder="รหัสผ่านผู้ดูแลระบบ"
-            className="w-full px-6 py-4 bg-[#F8F9F4] rounded-2xl mb-4 outline-none focus:ring-2 focus:ring-[#8A9A7B] text-center"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          {/* Password + Eye */}
+          <div className="relative mb-4">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="รหัสผ่านผู้ดูแลระบบ"
+              autoComplete="current-password"
+              className="w-full px-6 py-4 bg-[#F8F9F4] rounded-2xl
+                         outline-none focus:ring-2 focus:ring-[#8A9A7B]
+                         text-center pr-14"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-5 top-1/2 -translate-y-1/2
+                         text-[#8A9A7B] hover:text-[#5D6D4E]"
+              aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+
           <button className="w-full py-4 bg-[#8A9A7B] text-white rounded-2xl font-bold shadow-lg hover:bg-[#748465] transition-all">
             เข้าสู่ระบบ
           </button>
@@ -92,6 +118,7 @@ const LoginView = ({ onLogin }) => {
     </div>
   );
 };
+
 
 const DashboardView = ({ onLogout }) => {
   const [orders, setOrders] = useState([]);
