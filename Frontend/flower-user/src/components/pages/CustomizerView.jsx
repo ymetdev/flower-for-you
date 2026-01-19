@@ -193,35 +193,52 @@ const CustomizerView = ({ flowers, setFlowers, ribbon, setRibbon, ring, setRing,
                     />
 
                     {/* ปุ่มไอคอนสำหรับหมุน (Rotation Handle) */}
-                    <foreignObject
-                      x="-10"   // กึ่งกลางไอคอน (กว้าง 20 / 2)
-                      y="-40"   // ตำแหน่งความสูงเหนือรูปดอกไม้
-                      width="20"
-                      height="20"
-                    >
-                      <div
-                        style={{
-                          cursor: 'alias',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: '100%',
-                          height: '100%',
-                          fontSize: '14px',
-                          userSelect: 'none',
-                          // ใส่ background หรือ border เพิ่มได้ถ้าต้องการให้เห็นชัดขึ้น
-                          // backgroundColor: 'white',
-                          // borderRadius: '50%'
-                        }}
-                        onPointerDown={(e) => {
-                          e.stopPropagation(); // สำคัญมาก: กันไม่ให้ไปโดน event ลากของรูป
-                          setInteractionMode('rotate');
-                          handlePointerDown(e, f.id);
-                        }}
-                      >
-                        <RefreshCw className="w-1 h-1" />
-                      </div>
-                    </foreignObject>
+                    {/* ปุ่มไอคอนสำหรับหมุน + ลบ */}
+<foreignObject
+  x="-16"
+  y="-42"
+  width="32"
+  height="18"
+>
+  <div
+    style={{
+      display: 'flex',
+      gap: '2px',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+      userSelect: 'none',
+    }}
+  >
+    {/* หมุน */}
+    <div
+      style={{ cursor: 'alias' }}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        setInteractionMode('rotate');
+        handlePointerDown(e, f.id);
+      }}
+    >
+      <RefreshCw className="w-1.5 h-1.5 text-gray-500" />
+
+    </div>
+
+    {/* ลบ */}
+    <div
+      style={{ cursor: 'pointer' }}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        setFlowers(prev => prev.filter(item => item.id !== f.id));
+      }}
+    >
+     <Trash2 className="w-1.5 h-1.5 text-gray-500 hover:text-gray-700" />
+
+    </div>
+  </div>
+</foreignObject>
+
+
                   </g>
                 </g>
               ))}
@@ -263,12 +280,7 @@ const CustomizerView = ({ flowers, setFlowers, ribbon, setRibbon, ring, setRing,
                         {g.name} ({COLOR_NAMES[g.color] || 'ไม่ระบุสี'}) x {g.count}
                       </span>
 
-                      <button
-                        onClick={() => removeOneFlower(g.name, g.color)}
-                        className="text-gray-300 hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                     
                     </span>
                   ))}
                 </div>
