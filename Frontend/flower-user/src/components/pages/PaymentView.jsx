@@ -40,7 +40,7 @@ const PaymentView = ({
           <div className="text-[#5D6D4E] font-bold text-sm">
             <p>สแกนผ่านแอปธนาคารเพื่อชำระเงิน</p>
             <p className="text-[10px] opacity-60 font-normal mt-1">
-              ชื่อบัญชี: (ชื่อ-นามสกุล พิมวิ)
+              ชื่อบัญชี: (ชื่อ-นามสกุล พิมพ์วิชาดา จันทร์เพ็ญสุริยา)
             </p>
           </div>
         </div>
