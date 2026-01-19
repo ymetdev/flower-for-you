@@ -194,7 +194,7 @@ const HomeView = ({ onStartCustom, onGoCatalog }) => {
           </span>
         </h1>
         <p className="text-lg md:text-2xl font-light italic opacity-80 tracking-[0.2em] text-[#99908c]">
-          Crafted Flower
+          Crafted Flower pim
         </p>
       </div>
 
