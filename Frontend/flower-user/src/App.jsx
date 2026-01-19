@@ -195,6 +195,8 @@ const App = () => {
             }}
             onCheckout={() => setStep("checkout")}
             onViewImage={setActivePreviewImage}
+            
+      onBackToCustom={() => setStep("custom")} 
           />
         );
 
@@ -205,6 +207,7 @@ const App = () => {
             customerInfo={customerInfo}
             setCustomerInfo={setCustomerInfo}
             onNext={() => setStep("payment")}
+             onBack={() => setStep("cart")} 
             isValid={
               customerInfo.name && customerInfo.address && customerInfo.phone
             }
@@ -220,6 +223,7 @@ const App = () => {
             setPaymentSlip={setPaymentSlip}
             onConfirm={handleConfirmPayment}
             isLoading={isLoading}
+             onBack={() => setStep("checkout")}
           />
         );
 

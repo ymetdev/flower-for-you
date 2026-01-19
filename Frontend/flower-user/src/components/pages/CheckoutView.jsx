@@ -5,9 +5,10 @@ import {
   MapPin,
   CheckCircle2,
   AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
 
-const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
+const CheckoutView = ({ customerInfo, setCustomerInfo, onNext, onBack }) => {
   const isValidFullName = (name) => {
     const value = name.trim();
     const nameRegex = /^[A-Za-zก-๙]+(\s+[A-Za-zก-๙]+)*$/;
@@ -47,13 +48,11 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
     fieldStatus.address;
 
   const fieldError = {
-    name: customerInfo.name && !fieldStatus.name && "กรุณากรอกชื่อและนามสกุล ",
-
+    name: customerInfo.name && !fieldStatus.name && "กรุณากรอกชื่อและนามสกุล",
     phone:
       customerInfo.phone && !fieldStatus.phone && "กรุณากรอกเบอร์โทรที่ถูกต้อง",
-
-    email: customerInfo.email && !fieldStatus.email && "รูปแบบอีเมลไม่ถูกต้อง",
-
+    email:
+      customerInfo.email && !fieldStatus.email && "รูปแบบอีเมลไม่ถูกต้อง",
     address:
       customerInfo.address &&
       !fieldStatus.address &&
@@ -86,133 +85,153 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] p-8 flex items-center justify-center">
-      <div className="max-w-xl w-full bg-white p-10 rounded-3xl shadow-sm border border-[#F0EAD6]">
-        <h2 className="text-3xl font-serif text-[#5D6D4E] mb-8 text-center underline decoration-dotted decoration-[#8A9A7B]">
-          ข้อมูลผู้รับสินค้า
-        </h2>
+    <div className="min-h-screen bg-[#FDFBF7] p-8">
 
-        <div className="space-y-6">
-          <div>
-            <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
-              ชื่อ-นามสกุล
-            </label>
-            <div className="relative">
-              <User className="absolute left-4 top-4 text-gray-300" size={20} />
-              <input
-                type="text"
-                placeholder="สมชาย ใจดี "
-                className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
-                value={customerInfo.name}
-                onChange={(e) =>
-                  setCustomerInfo({ ...customerInfo, name: e.target.value })
-                }
-              />
-              <InputIndicator
-                isComplete={fieldStatus.name}
-                hasValue={customerInfo.name}
-              />
-            </div>
-            <ErrorText message={fieldError.name} />
-          </div>
+   
+      <button
+        onClick={onBack}
+        className="mb-6 flex items-center text-[#8A9A7B] font-bold"
+      >
+        <ArrowLeft size={18} className="mr-1" />
+        กลับไปตะกร้าสินค้า
+      </button>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+      <div className="flex items-center justify-center">
+        <div className="max-w-xl w-full bg-white p-10 rounded-3xl shadow-sm border border-[#F0EAD6]">
+          <h2 className="text-3xl font-serif text-[#5D6D4E] mb-8 text-center underline decoration-dotted decoration-[#8A9A7B]">
+            ข้อมูลผู้รับสินค้า
+          </h2>
+
+          <div className="space-y-6">
+            {/* ชื่อ */}
             <div>
               <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
-                เบอร์โทรศัพท์
+                ชื่อ-นามสกุล
               </label>
               <div className="relative">
-                <Phone
-                  className="absolute left-4 top-4 text-gray-300"
-                  size={20}
-                />
+                <User className="absolute left-4 top-4 text-gray-300" size={20} />
                 <input
-                  type="tel"
-                  placeholder="000-000-0000"
+                  type="text"
+                  placeholder="สมชาย ใจดี"
                   className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
-                  value={customerInfo.phone}
+                  value={customerInfo.name}
                   onChange={(e) =>
-                    setCustomerInfo({ ...customerInfo, phone: e.target.value })
+                    setCustomerInfo({ ...customerInfo, name: e.target.value })
                   }
                 />
                 <InputIndicator
-                  isComplete={fieldStatus.phone}
-                  hasValue={customerInfo.phone}
+                  isComplete={fieldStatus.name}
+                  hasValue={customerInfo.name}
                 />
               </div>
-              <ErrorText message={fieldError.phone} />
+              <ErrorText message={fieldError.name} />
             </div>
 
-            {/* อีเมล */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* โทรศัพท์ */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
+                  เบอร์โทรศัพท์
+                </label>
+                <div className="relative">
+                  <Phone
+                    className="absolute left-4 top-4 text-gray-300"
+                    size={20}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="000-000-0000"
+                    className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
+                    value={customerInfo.phone}
+                    onChange={(e) =>
+                      setCustomerInfo({
+                        ...customerInfo,
+                        phone: e.target.value,
+                      })
+                    }
+                  />
+                  <InputIndicator
+                    isComplete={fieldStatus.phone}
+                    hasValue={customerInfo.phone}
+                  />
+                </div>
+                <ErrorText message={fieldError.phone} />
+              </div>
+
+              {/* อีเมล */}
+              <div>
+                <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
+                  อีเมล
+                </label>
+                <div className="relative">
+                  <Mail
+                    className="absolute left-4 top-4 text-gray-300"
+                    size={20}
+                  />
+                  <input
+                    type="email"
+                    placeholder="example@email.com"
+                    className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
+                    value={customerInfo.email}
+                    onChange={(e) =>
+                      setCustomerInfo({
+                        ...customerInfo,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                  <InputIndicator
+                    isComplete={fieldStatus.email}
+                    hasValue={customerInfo.email}
+                  />
+                </div>
+                <ErrorText message={fieldError.email} />
+              </div>
+            </div>
+
             <div>
               <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
-                อีเมล
+                ที่อยู่
               </label>
               <div className="relative">
-                <Mail
+                <MapPin
                   className="absolute left-4 top-4 text-gray-300"
                   size={20}
                 />
-                <input
-                  type="email"
-                  placeholder="example@email.com"
+                <textarea
+                  rows="4"
+                  placeholder="กรุณาระบุที่อยู่สำหรับการจัดส่ง"
                   className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
-                  value={customerInfo.email}
+                  value={customerInfo.address}
                   onChange={(e) =>
-                    setCustomerInfo({ ...customerInfo, email: e.target.value })
+                    setCustomerInfo({
+                      ...customerInfo,
+                      address: e.target.value,
+                    })
                   }
                 />
-                <InputIndicator
-                  isComplete={fieldStatus.email}
-                  hasValue={customerInfo.email}
-                />
+                <div className="absolute right-4 top-4">
+                  <InputIndicator
+                    isComplete={fieldStatus.address}
+                    hasValue={customerInfo.address}
+                  />
+                </div>
               </div>
-              <ErrorText message={fieldError.email} />
+              <ErrorText message={fieldError.address} />
             </div>
-          </div>
 
-          {/* ที่อยู่ */}
-          <div>
-            <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
-              ที่อยู่
-            </label>
-            <div className="relative">
-              <MapPin
-                className="absolute left-4 top-4 text-gray-300"
-                size={20}
-              />
-              <textarea
-                rows="4"
-                placeholder="กรุณาระบุที่อยู่สําหรับการจัดส่ง"
-                className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
-                value={customerInfo.address}
-                onChange={(e) =>
-                  setCustomerInfo({
-                    ...customerInfo,
-                    address: e.target.value,
-                  })
-                }
-              />
-              <div className="absolute right-4 top-4">
-                <InputIndicator
-                  isComplete={fieldStatus.address}
-                  hasValue={customerInfo.address}
-                />
-              </div>
-            </div>
-            <ErrorText message={fieldError.address} />
+            <button
+              onClick={() => {
+                if (!isValid) return;
+                onNext();
+              }}
+              disabled={!isValid}
+              className="w-full py-5 bg-[#8A9A7B] text-white rounded-2xl font-bold shadow-md transition-all active:scale-95 disabled:bg-gray-200 disabled:text-gray-400"
+            >
+              {isValid ? "ต่อไป: ชำระเงิน" : "กรุณากรอกข้อมูลให้ถูกต้อง"}
+            </button>
           </div>
-
-          <button
-            onClick={() => {
-              if (!isValid) return;
-              onNext();
-            }}
-            disabled={!isValid}
-            className="w-full py-5 bg-[#8A9A7B] text-white rounded-2xl font-bold shadow-md transition-all active:scale-95 disabled:bg-gray-200 disabled:text-gray-400"
-          >
-            {isValid ? "ต่อไป: ชำระเงิน" : "กรุณากรอกข้อมูลให้ถูกต้อง"}
-          </button>
         </div>
       </div>
     </div>
