@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 
 const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
- 
   const isValidFullName = (name) => {
     const value = name.trim();
     const nameRegex = /^[A-Za-zก-๙]+(\s+[A-Za-zก-๙]+)*$/;
@@ -20,13 +19,11 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
     return /^0\d{9}$/.test(cleaned);
   };
 
-  
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     return emailRegex.test(email.trim());
   };
 
-  
   const isValidAddress = (address) => {
     const value = address.trim();
     const hasNumber = /\d/.test(value);
@@ -49,22 +46,13 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
     fieldStatus.email &&
     fieldStatus.address;
 
- 
   const fieldError = {
-    name:
-      customerInfo.name &&
-      !fieldStatus.name &&
-      "กรุณากรอกชื่อและนามสกุล ",
+    name: customerInfo.name && !fieldStatus.name && "กรุณากรอกชื่อและนามสกุล ",
 
     phone:
-      customerInfo.phone &&
-      !fieldStatus.phone &&
-      "กรุณากรอกเบอร์โทรที่ถูกต้อง",
+      customerInfo.phone && !fieldStatus.phone && "กรุณากรอกเบอร์โทรที่ถูกต้อง",
 
-    email:
-      customerInfo.email &&
-      !fieldStatus.email &&
-      "รูปแบบอีเมลไม่ถูกต้อง",
+    email: customerInfo.email && !fieldStatus.email && "รูปแบบอีเมลไม่ถูกต้อง",
 
     address:
       customerInfo.address &&
@@ -72,12 +60,13 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
       "กรุณากรอกที่อยู่ให้ครบ (บ้านเลขที่ / ถนน / เขต / จังหวัด)",
   };
 
- 
-
   const InputIndicator = ({ isComplete, hasValue }) => {
     if (!hasValue) return null;
     return isComplete ? (
-      <CheckCircle2 className="absolute right-4 top-4 text-green-500" size={18} />
+      <CheckCircle2
+        className="absolute right-4 top-4 text-green-500"
+        size={18}
+      />
     ) : (
       <AlertCircle
         className="absolute right-4 top-4 text-orange-400"
@@ -104,13 +93,15 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
         </h2>
 
         <div className="space-y-6">
-          
           <div>
+            <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
+              ชื่อ-นามสกุล
+            </label>
             <div className="relative">
               <User className="absolute left-4 top-4 text-gray-300" size={20} />
               <input
                 type="text"
-                placeholder="ชื่อ-นามสกุล "
+                placeholder="สมชาย ใจดี "
                 className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
                 value={customerInfo.name}
                 onChange={(e) =>
@@ -126,8 +117,10 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          
             <div>
+              <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
+                เบอร์โทรศัพท์
+              </label>
               <div className="relative">
                 <Phone
                   className="absolute left-4 top-4 text-gray-300"
@@ -135,7 +128,7 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
                 />
                 <input
                   type="tel"
-                  placeholder="เบอร์โทรศัพท์"
+                  placeholder="000-000-0000"
                   className="w-full pl-12 pr-12 py-4 bg-[#F8F9F4] rounded-2xl outline-none focus:ring-2 focus:ring-[#8A9A7B]"
                   value={customerInfo.phone}
                   onChange={(e) =>
@@ -152,6 +145,9 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
 
             {/* อีเมล */}
             <div>
+              <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
+                อีเมล
+              </label>
               <div className="relative">
                 <Mail
                   className="absolute left-4 top-4 text-gray-300"
@@ -177,6 +173,9 @@ const CheckoutView = ({ customerInfo, setCustomerInfo, onNext }) => {
 
           {/* ที่อยู่ */}
           <div>
+            <label className="block mb-2 text-sm font-medium text-[#5D6D4E]">
+              ที่อยู่
+            </label>
             <div className="relative">
               <MapPin
                 className="absolute left-4 top-4 text-gray-300"
